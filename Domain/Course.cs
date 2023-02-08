@@ -13,5 +13,7 @@
 
         public int ProfesorId { get; set; }
         public Profesor? Profesor { get; set; }
+
+        public IEnumerable<CoursesStudents>? CoursesStudents { get; set; }
     }
 }
