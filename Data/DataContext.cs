@@ -25,16 +25,19 @@ namespace EntityFrameworkPractice.Data
 
             // Define relationships
             modelBuilder.Entity<CoursesStudents>()
-                .HasOne<Course>(ce => ce.Course)
+                .HasOne(ce => ce.Course)
                 .WithMany(Courses => Courses.CoursesStudents)
                 .HasForeignKey(ce => ce.CourseId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<CoursesStudents>()
-                .HasOne<Student>(std => std.Student)
+                .HasOne(std => std.Student)
                 .WithMany(Courses => Courses.CoursesStudents)
                 .HasForeignKey(std => std.StudentId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            // Load initial data
+            modelBuilder.Seed();
         }
     }
 }
