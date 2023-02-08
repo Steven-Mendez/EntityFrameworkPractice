@@ -17,6 +17,8 @@ namespace EntityFrameworkPractice.Data
 
         override protected void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Course>().HasOne(c => c.Status).WithMany(s => s.Courses).HasForeignKey(s => s.StatusId).OnDelete(DeleteBehavior.NoAction);
+
             // Define primary key
             modelBuilder.Entity<CoursesStudents>()
                 .HasKey(CoursesStudents => new { CoursesStudents.CourseId, CoursesStudents.StudentId });
@@ -25,12 +27,14 @@ namespace EntityFrameworkPractice.Data
             modelBuilder.Entity<CoursesStudents>()
                 .HasOne<Course>(ce => ce.Course)
                 .WithMany(Courses => Courses.CoursesStudents)
-                .HasForeignKey(ce => ce.CourseId);
+                .HasForeignKey(ce => ce.CourseId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<CoursesStudents>()
                 .HasOne<Student>(std => std.Student)
                 .WithMany(Courses => Courses.CoursesStudents)
-                .HasForeignKey(std => std.StudentId);
+                .HasForeignKey(std => std.StudentId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
